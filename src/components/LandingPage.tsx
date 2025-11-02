@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { Button } from './Button';
 import { useQuizStore } from '@/store/quiz';
 import { EXAMPLE_QUIZ } from '@/lib/constants';
@@ -28,7 +27,10 @@ export default function LandingPage() {
           <div className="w-3 h-3 rounded-full bg-accent-red"></div>
         </div>
         <h1 className="text-4xl font-bold text-accent-green mb-2">Roamin' in Rome</h1>
-        <p className="text-text-primary opacity-75">20-Minute Pub Quiz</p>
+        <p className="text-text-primary opacity-75 mb-2">20-Minute Pub Quiz</p>
+        <p className="text-sm text-text-primary opacity-60">
+          Host reads questions ? Players write answers on paper
+        </p>
       </div>
 
       <div className="w-full max-w-sm space-y-4">
@@ -40,12 +42,6 @@ export default function LandingPage() {
         >
           Host Quiz
         </Button>
-
-        <Link href="/join" className="block">
-          <Button variant="secondary" size="lg" className="w-full">
-            Join with Code
-          </Button>
-        </Link>
       </div>
 
       <div className="mt-16 text-center text-xs text-text-primary opacity-50">
