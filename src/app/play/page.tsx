@@ -18,10 +18,11 @@ export default function PlayPage() {
 
   const currentRound = store.quizSpec?.rounds[store.roundIdx];
   const currentQuestion = currentRound?.questions[store.questionIdx];
+  const setHostMode = useQuizStore(state => state.setHostMode);
 
   useEffect(() => {
-    store.setHostMode(true);
-  }, [store]);
+    setHostMode(true);
+  }, [setHostMode]);
 
   const addTeam = (name: string) => {
     if (!name.trim()) return;

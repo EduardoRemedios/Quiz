@@ -15,19 +15,26 @@ import { cn } from '@/lib/utils';
 
 export default function HostPage() {
   const router = useRouter();
+  const quizSpec = useQuizStore(state => state.quizSpec);
+  const roomCode = useQuizStore(state => state.roomCode);
+  const setHostMode = useQuizStore(state => state.setHostMode);
+  const createRoom = useQuizStore(state => state.createRoom);
   const store = useQuizStore();
   const [step, setStep] = useState<'editor' | 'session'>('editor');
   const [showScoreboard, setShowScoreboard] = useState(false);
 
   useEffect(() => {
-    store.setHostMode(true);
-    if (store.quizSpec) {
+    setHostMode(true);
+  }, [setHostMode]);
+
+  useEffect(() => {
+    if (quizSpec) {
       setStep('session');
-      if (!store.roomCode) {
-        store.createRoom();
+      if (!roomCode) {
+        createRoom();
       }
     }
-  }, [store, store.quizSpec, store.roomCode]);
+  }, [quizSpec, roomCode, createRoom]);
 
   if (step === 'editor') {
     return (
