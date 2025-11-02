@@ -7,7 +7,7 @@ import { QuizCard } from '@/components/QuizCard';
 import { Timer } from '@/components/Timer';
 import { Scoreboard } from '@/components/Scoreboard';
 import { Button } from '@/components/Button';
-import { vibrate, playSound } from '@/lib/utils';
+import { vibrate, playSound, cn } from '@/lib/utils';
 import { TEAM_COLORS } from '@/lib/constants';
 
 interface JoinRoomPageProps {
@@ -24,6 +24,8 @@ export default function JoinRoomPage({ params }: JoinRoomPageProps) {
   const [buzzed, setBuzzed] = useState(false);
   const [locked, setLocked] = useState(false);
   const [showScoreboard, setShowScoreboard] = useState(false);
+  const [newTeamName, setNewTeamName] = useState('');
+  const [showCreateTeam, setShowCreateTeam] = useState(false);
 
   useEffect(() => {
     if (!store.playerId) {
@@ -31,6 +33,10 @@ export default function JoinRoomPage({ params }: JoinRoomPageProps) {
     }
     if (name && !selectedTeamId) {
       setStep('team');
+      // Show create team option if no teams exist
+      if (store.teams.length === 0) {
+        setShowCreateTeam(true);
+      }
     }
   }, [store, name, selectedTeamId]);
 
@@ -42,6 +48,18 @@ export default function JoinRoomPage({ params }: JoinRoomPageProps) {
     setSelectedTeamId(teamId);
     store.setPlayerTeamId(teamId);
     setStep('playing');
+  };
+
+  const handleCreateTeam = () => {
+    if (newTeamName.trim()) {
+      const color = TEAM_COLORS[store.teams.length % TEAM_COLORS.length];
+      const teamId = store.addTeam(newTeamName.trim(), color);
+      setSelectedTeamId(teamId);
+      store.setPlayerTeamId(teamId);
+      setNewTeamName('');
+      setShowCreateTeam(false);
+      setStep('playing');
+    }
   };
 
   const handleBuzz = () => {
@@ -69,27 +87,73 @@ export default function JoinRoomPage({ params }: JoinRoomPageProps) {
               Join {params.room}
             </h1>
             <p className="text-sm text-text-primary opacity-75">
-              Hi {name}, choose your team:
+              Hi {name}, {store.teams.length > 0 ? 'choose your team:' : 'create a team to get started:'}
             </p>
           </div>
 
-          <div className="space-y-3">
-            {store.teams.map((team, idx) => (
-              <button
-                key={team.id}
-                onClick={() => handleSelectTeam(team.id)}
-                className="w-full p-4 rounded-lg border-2 border-border-default bg-bg-card text-text-primary hover:border-accent-green transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-green"
-              >
-                <div className="flex items-center gap-3">
-                  <div
-                    className="w-6 h-6 rounded-full"
-                    style={{ backgroundColor: team.color }}
-                  />
-                  <span className="font-semibold">{team.name}</span>
-                </div>
-              </button>
-            ))}
-          </div>
+          {store.teams.length > 0 && (
+            <div className="space-y-3">
+              <p className="text-sm font-semibold text-text-primary opacity-75">Existing Teams:</p>
+              {store.teams.map((team, idx) => (
+                <button
+                  key={team.id}
+                  onClick={() => handleSelectTeam(team.id)}
+                  className="w-full p-4 rounded-lg border-2 border-border-default bg-bg-card text-text-primary hover:border-accent-green transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-green"
+                >
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="w-6 h-6 rounded-full"
+                      style={{ backgroundColor: team.color }}
+                    />
+                    <span className="font-semibold">{team.name}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          )}
+
+          {showCreateTeam || store.teams.length === 0 ? (
+            <div className="space-y-3 bg-bg-card rounded-lg border-2 border-border-default p-4">
+              <p className="text-sm font-semibold text-text-primary opacity-75">
+                {store.teams.length > 0 ? 'Or create a new team:' : 'Create Team:'}
+              </p>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={newTeamName}
+                  onChange={(e) => setNewTeamName(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && newTeamName.trim()) {
+                      handleCreateTeam();
+                    }
+                  }}
+                  placeholder="Team name"
+                  autoFocus={store.teams.length === 0}
+                  className={cn(
+                    'flex-1 px-3 py-2 rounded-lg border-2 border-border-default bg-bg-primary text-text-primary',
+                    'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-green'
+                  )}
+                />
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={handleCreateTeam}
+                  disabled={!newTeamName.trim()}
+                >
+                  Create
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => setShowCreateTeam(true)}
+              className="w-full"
+            >
+              Create New Team
+            </Button>
+          )}
 
           <Button
             variant="outline"
