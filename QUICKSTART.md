@@ -1,6 +1,6 @@
-# Quick Start – 5 Minutes to Playing
+# Quick Start – 2 Minutes to Playing
 
-## Step 1: Install & Run (2 min)
+## Step 1: Install & Run (1 min)
 
 ```bash
 cd quiz
@@ -12,30 +12,31 @@ Open **http://localhost:3000** in your browser.
 
 ---
 
-## Step 2: Host a Quiz (2 min)
+## Step 2: Host a Quiz (30 sec)
 
-### Option A: Load Example
-1. Click **"Load Example Quiz"**
-2. It auto-loads and redirects to host mode
+1. Click **"Host Quiz"** on the landing page
+2. The Rome quiz loads automatically
+3. Room code is generated (e.g., `A1B2`)
+4. Copy the room code or shareable link
+5. Click **"Start Session"** when ready
 
-### Option B: Write Your Own YAML
-1. Click **"Host a Quiz"**
-2. Paste or write YAML (see format below)
-3. Click **"Validate & Preview"** (should turn green)
-4. Click **"Start Session"**
+**That's it!** The quiz is pre-loaded - no configuration needed.
 
 ---
 
-## Step 3: Get Players to Join (1 min)
+## Step 3: Get Players to Join (30 sec)
 
 ### Mobile Players
 
 **On each player's phone:**
-1. Visit the room link (appears on host screen)
-   - **Or**: Visit http://localhost:3000/join, enter room code
-2. Enter name
-3. Pick team
-4. Wait for host to start
+1. Visit the app URL (localhost:3000 or your Vercel URL)
+2. Click **"Join with Code"**
+3. Enter the 4-character room code (e.g., `A1B2`)
+4. Enter your name
+5. **Create or join a team:**
+   - First player: Create a team (e.g., "Team Alpha")
+   - Other players: Join existing team OR create new team
+6. Wait for host to start
 
 **On host screen:**
 - Room code shown (4 chars like `A1B2`)
@@ -65,34 +66,15 @@ Open **http://localhost:3000** in your browser.
 
 ---
 
-## Quick YAML Template
+## Current Quiz: "Roamin' in Rome"
 
-```yaml
-title: "My Awesome Quiz"
-description: "Team challenge"
-rounds:
-  - id: round-1
-    title: "Round 1"
-    duration: 30
-    questions:
-      - id: q1
-        type: multiple_choice
-        question: "What is 2+2?"
-        options:
-          - "3"
-          - "4"
-          - "5"
-        correctAnswer: 1
-        explanation: "Correct!"
-        points: 10
-```
+The app comes with a pre-loaded Rome quiz:
 
-**Question Types:**
-- `multiple_choice`: Options with single correct answer
-- `picture`: Image + options
-- `audio`: Audio file + options
-- `speed`: Reaction time (fastest = highest score)
-- `wager_final`: Bet your score on final question
+- **4 Rounds** × 5 minutes each = 20 minutes total
+- **20 Questions** - All about Rome (ancient history, landmarks, food, modern culture)
+- **210 Points** possible (10 pts/question, 15 pts for bonus questions)
+
+Perfect for a pub quiz night! No setup needed - just click "Host Quiz" and start.
 
 ---
 
@@ -125,11 +107,12 @@ Follow prompts. Done! Your quiz is live.
 
 | Problem | Solution |
 |---------|----------|
-| YAML error | Check indentation (2 spaces, no tabs) |
+| Players can't see teams | They need to create a team first - click "Create Team" and enter a name |
 | Players can't join | Ensure you're on same WiFi (or use Vercel URL) |
 | No sound | Click 🔊 button on host bar to enable |
 | Mobile layout broken | Open Chrome DevTools, refresh page |
 | Build fails | Run `npm install` again, then `npm run build` |
+| Quiz not loading | Clear browser cache and localStorage, refresh page |
 
 ---
 

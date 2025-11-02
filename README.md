@@ -1,6 +1,8 @@
-# Symphony Quiz – Production-Ready Mobile Quiz Game
+# Roamin' in Rome – 20-Minute Pub Quiz
 
-A fast, accessible, mobile-first team quiz game built with **Next.js 16**, **TypeScript**, **Tailwind CSS**, and **Zustand**. Works on phones, tablets, and desktop. Deploy to Vercel in seconds.
+A fast, accessible, mobile-first team quiz game built with **Next.js 16**, **TypeScript**, **Tailwind CSS**, and **Zustand**. Perfect for quiz nights and team events. Works on phones, tablets, and desktop. Deploy to Vercel in seconds.
+
+**Note:** This app is configured for a one-time quiz night with the "Roamin' in Rome" quiz hardcoded. The quiz loads automatically - no YAML editing needed!
 
 ## Features
 
@@ -9,10 +11,9 @@ A fast, accessible, mobile-first team quiz game built with **Next.js 16**, **Typ
 - **Team Mode**: Single-screen pass-the-phone play (no external services)
 
 ✅ **Quiz Management**
-- Paste YAML to create quizzes
-- Line/column error reporting
-- URL-safe shareable payloads (base64 encoded)
-- Built-in example quiz
+- Rome quiz pre-loaded and ready to use
+- Automatic quiz loading - no configuration needed
+- Simple one-click start for quiz night
 
 ✅ **Question Types**
 - Multiple choice
@@ -95,93 +96,72 @@ vercel
 
 ### Host Mode (`/host`)
 
-1. **Paste/Edit YAML Quiz**
-   - Define rounds and questions
-   - Real-time validation with line/col errors
-   - Preview quiz cards
+1. **Start the Quiz**
+   - Click "Host Quiz" on the landing page
+   - The Rome quiz loads automatically
+   - Room code is generated automatically (4-character code like `A1B2`)
 
-2. **Generate Room Code**
-   - 4-character alphanumeric code (e.g., `A1B2`)
-   - Shareable link or display on projector
+2. **Share Room Code**
+   - Copy the room code or shareable link
+   - Display on projector or share via messaging
+   - Players use this code to join
 
 3. **Run Session**
+   - Click "Start Session" to begin
    - Bottom control bar: Play/Pause, Reveal, Next/Prev, Settings
    - Keyboard shortcuts: Space, R, →, ←, A+, ◐, ⛶
+   - Navigate through 4 rounds with 20 questions total
 
 4. **Scoreboard**
-   - See live standings with animated rank changes
+   - Toggle scoreboard anytime to see live standings
+   - Animated rank changes as scores update
 
 ### Player Join (`/join/:room?name=...`)
 
-1. Enter room code or scan QR link
-2. Select team (or auto-assigned)
-3. Buzz when timer starts
-4. Lock in answers
-5. See scores after reveal
+1. **Enter Room Code**
+   - Click "Join with Code" on landing page
+   - Enter the 4-character room code from host
 
-### Team Mode (`/play`)
+2. **Enter Your Name**
+   - Type your name and continue
 
-1. Add teams (one-hand reach)
-2. Pass phone, tap buzzer for each team
-3. Lock answers, reveal, score
-4. Next question
+3. **Create or Join Team**
+   - If no teams exist: Create a new team with a name
+   - If teams exist: Join an existing team OR create a new one
+   - Each team gets a unique color
+
+4. **Play**
+   - Wait for host to start the question
+   - Buzz in when ready (big green BUZZ button)
+   - Lock in your answer by tapping an option
+   - See your score after the host reveals answers
+
+### Team Mode (`/play`) - Alternative Single-Screen Mode
+
+1. Host navigates to `/play` instead of `/host`
+2. Add teams on the host device (one-hand reach)
+3. Pass phone around - each team taps buzzer for their turn
+4. Lock answers, reveal, score
+5. Navigate to next question
+6. **Works completely offline** - no internet needed after first load
 
 ---
 
-## Quiz YAML Format
+## Current Quiz: "Roamin' in Rome"
 
-```yaml
-title: "Quiz Title"
-description: "Optional description"
-rounds:
-  - id: round-1
-    title: "Round 1 Name"
-    duration: 30  # seconds (default)
-    questions:
-      - id: q1
-        type: multiple_choice
-        question: "What is 2+2?"
-        options:
-          - "3"
-          - "4"
-          - "5"
-        correctAnswer: 1  # index (0-based)
-        explanation: "4 is correct!"
-        points: 10  # optional
+The app comes pre-loaded with a 20-minute Rome-themed quiz:
 
-      - id: q2
-        type: picture
-        question: "Which city is this?"
-        image: "/round-assets/rome.jpg"
-        options:
-          - "Rome"
-          - "Milan"
-        correctAnswer: 0
-        points: 15
+- **4 Rounds** (5 minutes each):
+  1. **Ancient Rome** - Historical questions about the Colosseum, Via Appia, Seven Hills, Pantheon, and Julius Caesar
+  2. **Landmarks & City Layout** - Trevi Fountain, Piazza Navona, Spanish Steps, St. Peter's Basilica
+  3. **Food, Drink & Daily Life** - Roman pasta dishes, street food, Campo de' Fiori, Bocca della Verità
+  4. **Modern Rome, Pop Culture & Sport** - Derby della Capitale, La Dolce Vita, aqueducts, Fiumicino airport
 
-      - id: q3
-        type: audio
-        question: "Listen and identify:"
-        audio: "/round-assets/song.mp3"
-        options:
-          - "Song A"
-          - "Song B"
-        correctAnswer: 0
+- **20 Questions Total** - All multiple choice
+- **Scoring**: 10 points per question, 15 points for bonus questions (Q5 in each round)
+- **Total Possible**: 210 points
 
-      - id: q4
-        type: speed
-        question: "Tap as fast as you can!"
-        options:
-          - "GO!"
-        points: 20
-
-      - id: q5
-        type: wager_final
-        question: "Final: Bet your score!"
-        correctAnswer: "2015"
-        explanation: "Founded in 2015!"
-        points: 50
-```
+**Note:** The quiz is hardcoded in the app. To change it, edit `src/lib/constants.ts` and modify the `EXAMPLE_QUIZ` constant.
 
 ---
 

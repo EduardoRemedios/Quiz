@@ -1,26 +1,29 @@
-# Symphony Quiz – Implementation Summary
+# Roamin' in Rome – Implementation Summary
 
 **Status**: ✅ **COMPLETE & PRODUCTION-READY**
+
+**Current Configuration**: Hardcoded Rome quiz for one-time quiz night
 
 ---
 
 ## What's Been Built
 
-A **mobile-first team quiz game** in **Next.js 16** with full TypeScript, accessible, offline-capable, and ready to deploy to Vercel.
+A **mobile-first team quiz game** in **Next.js 16** with full TypeScript, accessible, offline-capable, and ready to deploy to Vercel. Currently configured with a pre-loaded "Roamin' in Rome" quiz for a one-time quiz night event.
 
 ### Completed Features
 
 #### Core Functionality ✅
-- [x] Landing page (Host / Join / Load Example)
-- [x] Host mode with YAML editor + validator
-- [x] Team Mode single-screen (pass-the-phone)
-- [x] Player join flow (name → team selection)
+- [x] Landing page (Host / Join) - Simplified for quiz night
+- [x] Host mode with auto-loaded Rome quiz
+- [x] Team Mode single-screen (pass-the-phone) - Alternative mode
+- [x] Player join flow (name → team creation/selection)
 - [x] Buzzer UI with vibration feedback
 - [x] Scoreboard with animated transitions
-- [x] 5 question types (multiple choice, picture, audio, speed, wager)
-- [x] Per-round timer with visual progress ring
+- [x] Multiple choice questions (20 questions pre-loaded)
+- [x] Per-round timer with visual progress ring (5 minutes per round)
 - [x] Room code generation (4 chars) + shareable link
 - [x] Settings persistence (localStorage)
+- [x] Player team creation on join
 
 #### Accessibility ✅
 - [x] Large text toggle (16px → 18px)
@@ -193,23 +196,26 @@ quiz/                                    # Root
 
 ### As a Host
 
-1. **Start**: `npm run dev`
-2. **Visit**: http://localhost:3000
-3. **Click**: "Host a Quiz"
-4. **Paste Example Quiz** or write YAML
-5. **Validate**: Click "Validate & Preview"
-6. **Share**: Copy room code or link
-7. **Run**: Click "Start Session"
-8. **Control**: Use bottom bar or keyboard shortcuts
+1. **Start**: `npm run dev` (or deploy to Vercel)
+2. **Visit**: http://localhost:3000 (or your Vercel URL)
+3. **Click**: "Host Quiz"
+4. **Quiz Loads**: Rome quiz loads automatically
+5. **Share**: Copy room code or link
+6. **Run**: Click "Start Session"
+7. **Control**: Use bottom bar or keyboard shortcuts
+   - Navigate through 4 rounds, 20 questions
+   - Reveal answers, manage timer, view scoreboard
 
 ### As a Player
 
-1. **Visit**: http://localhost:3000
+1. **Visit**: http://localhost:3000 (or your Vercel URL)
 2. **Click**: "Join with Code"
-3. **Enter Code**: (Host shows it)
+3. **Enter Code**: 4-character code from host (e.g., `A1B2`)
 4. **Name**: Enter your name
-5. **Team**: Pick or create team
-6. **Play**: Buzz, lock answer, see score
+5. **Team**: Create a new team OR join existing team
+   - First player creates the first team
+   - Subsequent players can join or create new teams
+6. **Play**: Wait for host to start, buzz in, lock answer, see score
 
 ### Team Mode (No Realtime)
 
