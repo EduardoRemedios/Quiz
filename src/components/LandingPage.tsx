@@ -22,6 +22,11 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-8 safe-padding">
       <div className="text-center mb-12">
+        <div className="mb-4 flex items-center justify-center gap-2">
+          <div className="w-3 h-3 rounded-full bg-accent-green"></div>
+          <div className="w-3 h-3 rounded-full bg-accent-white border-2 border-accent-green"></div>
+          <div className="w-3 h-3 rounded-full bg-accent-red"></div>
+        </div>
         <h1 className="text-4xl font-bold text-accent-green mb-2">Roamin' in Rome</h1>
         <p className="text-text-primary opacity-75">20-Minute Pub Quiz</p>
       </div>

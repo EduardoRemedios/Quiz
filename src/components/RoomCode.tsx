@@ -17,8 +17,13 @@ export function RoomCode({ code, roomUrl }: RoomCodeProps) {
   };
 
   return (
-    <div className="flex flex-col items-center gap-6 p-6 bg-bg-card rounded-lg border-2 border-border-default">
+    <div className="flex flex-col items-center gap-6 p-6 bg-bg-card rounded-lg border-2 border-accent-green shadow-md shadow-accent-green/20">
       <div className="text-center">
+        <div className="mb-3 flex items-center justify-center gap-1.5">
+          <div className="w-2 h-2 rounded-full bg-accent-green"></div>
+          <div className="w-2 h-2 rounded-full bg-accent-white border border-accent-green"></div>
+          <div className="w-2 h-2 rounded-full bg-accent-red"></div>
+        </div>
         <h3 className="text-sm font-semibold text-text-primary opacity-75 mb-2">
           Room Code
         </h3>

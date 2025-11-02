@@ -26,7 +26,7 @@ export function HostControls({
   const isRevealed = phase === 'revealed';
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-bg-card border-t-2 border-border-default safe-padding safe-bottom">
+    <div className="fixed bottom-0 left-0 right-0 bg-bg-card border-t-2 border-accent-green safe-padding safe-bottom">
       <div className="max-w-4xl mx-auto">
         <div className="grid grid-cols-4 gap-2 p-3">
           <Button

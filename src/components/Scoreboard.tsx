@@ -2,6 +2,7 @@
 
 import { useQuizStore } from '@/store/quiz';
 import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 export function Scoreboard() {
   const teams = useQuizStore(state => state.teams);
@@ -17,14 +18,20 @@ export function Scoreboard() {
           key={team.id}
           layout
           transition={{ type: 'spring', stiffness: 400, damping: 40 }}
-          className="flex items-center gap-4 p-4 bg-bg-card rounded-lg border-2 border-border-default"
+          className={cn(
+            "flex items-center gap-4 p-4 bg-bg-card rounded-lg border-2 transition-colors",
+            idx === 0 ? "border-accent-green shadow-md shadow-accent-green/20" : "border-border-default hover:border-accent-green/50"
+          )}
         >
-          <div className="text-lg font-bold text-accent-green min-w-8">
+          <div className={cn(
+            "text-lg font-bold min-w-8",
+            idx === 0 ? "text-accent-green" : "text-text-primary opacity-75"
+          )}>
             {idx + 1}
           </div>
           <div
             className="w-4 h-4 rounded-full"
-            style={{ backgroundColor: team.color || '#1e7f4f' }}
+            style={{ backgroundColor: team.color || '#009246' }}
           />
           <div className="flex-1">
             <div className="font-semibold text-text-primary">{team.name}</div>

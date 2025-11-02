@@ -12,6 +12,7 @@ const config: Config = {
         accent: {
           green: 'var(--accent-green)',
           red: 'var(--accent-red)',
+          white: 'var(--accent-white)',
         },
         bg: {
           primary: 'var(--bg)',

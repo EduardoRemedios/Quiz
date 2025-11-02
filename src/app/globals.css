@@ -3,15 +3,16 @@
 @tailwind utilities;
 
 :root {
-  --accent-green: #1e7f4f;
-  --accent-red: #d24848;
-  --bg: #f7f7f5;
+  --accent-green: #009246; /* Vibrant Italian flag green */
+  --accent-red: #ce2b37; /* Vibrant Italian flag red */
+  --accent-white: #ffffff; /* Italian flag white */
+  --bg: #fefefe; /* Clean white background with slight warmth */
   --card: #ffffff;
-  --text: #0f1210;
-  --border: #e0e0dd;
+  --text: #1a1a1a;
+  --border: #d4d4d4;
   --disabled: #c0c0b8;
-  --success: #2a9d6f;
-  --warning: #c96969;
+  --success: #009246; /* Use Italian green for success */
+  --warning: #ce2b37; /* Use Italian red for warnings */
   
   --base-font-size: 16px;
 }

@@ -35,10 +35,10 @@ export function MultipleChoiceCard({ question, isRevealed, onAnswer }: MultipleC
                 'border-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-green',
                 'min-h-14 flex items-center',
                 isRevealed && isSelected
-                  ? 'bg-accent-green text-white border-accent-green'
+                  ? 'bg-accent-green text-white border-accent-green shadow-md shadow-accent-green/20'
                   : isRevealed && question.correctAnswer !== undefined && question.correctAnswer !== idx
                   ? 'bg-accent-red text-white border-accent-red opacity-50'
-                  : 'bg-bg-card border-border-default text-text-primary hover:border-accent-green'
+                  : 'bg-bg-card border-border-default text-text-primary hover:border-accent-green hover:shadow-sm hover:shadow-accent-green/10 transition-all'
               )}
             >
               <span className="text-lg font-bold mr-3 min-w-8">

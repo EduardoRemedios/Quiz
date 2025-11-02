@@ -11,9 +11,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const baseClasses = 'font-medium rounded-lg transition-all active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-green disabled:opacity-50 disabled:cursor-not-allowed';
     
     const variantClasses = {
-      primary: 'bg-accent-green text-white hover:bg-opacity-90 active:bg-opacity-80',
-      secondary: 'bg-bg-card text-accent-green border-2 border-accent-green hover:bg-opacity-90',
-      outline: 'border-2 border-accent-green text-accent-green hover:bg-accent-green hover:bg-opacity-10',
+      primary: 'bg-accent-green text-white hover:bg-opacity-90 active:bg-opacity-80 shadow-md shadow-accent-green/20',
+      secondary: 'bg-bg-card text-accent-green border-2 border-accent-green hover:bg-accent-green hover:bg-opacity-10 hover:border-accent-red transition-colors',
+      outline: 'border-2 border-accent-green text-accent-green hover:bg-accent-green hover:text-white hover:border-accent-red transition-all',
     };
     
     const sizeClasses = {

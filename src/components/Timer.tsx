@@ -38,8 +38,8 @@ export function Timer({ duration, started, onComplete }: TimerProps) {
   const progress = started ? 1 - (remaining / duration) : 0;
 
   return (
-    <div className="flex flex-col items-center gap-4">
-      <div className="relative w-32 h-32 flex items-center justify-center">
+    <div className="flex flex-col items-center gap-1">
+      <div className="relative w-11 h-11 flex items-center justify-center">
         <svg className="absolute w-full h-full transform -rotate-90" viewBox="0 0 100 100">
           <circle
             cx="50"
@@ -61,13 +61,12 @@ export function Timer({ duration, started, onComplete }: TimerProps) {
           />
         </svg>
         <div className="text-center">
-          <div className="text-5xl font-bold text-accent-green">
+          <div className="text-xl font-bold text-accent-green leading-none">
             {remaining}
           </div>
-          <div className="text-xs text-text-primary opacity-50">seconds</div>
         </div>
       </div>
-      <p className="text-sm text-text-primary opacity-75 aria-live-polite" role="status" aria-live="polite">
+      <p className="text-xs text-text-primary opacity-75 aria-live-polite" role="status" aria-live="polite">
         Time remaining: {formatTime(remaining)}
       </p>
     </div>
