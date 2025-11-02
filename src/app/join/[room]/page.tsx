@@ -8,7 +8,8 @@ import { Timer } from '@/components/Timer';
 import { Scoreboard } from '@/components/Scoreboard';
 import { Button } from '@/components/Button';
 import { vibrate, playSound, cn } from '@/lib/utils';
-import { TEAM_COLORS } from '@/lib/constants';
+import { TEAM_COLORS, EXAMPLE_QUIZ } from '@/lib/constants';
+import { parseYAML } from '@/lib/yaml-parser';
 
 interface JoinRoomPageProps {
   params: { room: string };
@@ -18,6 +19,8 @@ export default function JoinRoomPage({ params }: JoinRoomPageProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const store = useQuizStore();
+  const loadQuiz = useQuizStore(state => state.loadQuiz);
+  const setRoomCode = useQuizStore(state => state.setRoomCode);
   const [name] = useState(searchParams.get('name') || '');
   const [step, setStep] = useState<'team' | 'waiting' | 'playing'>('team');
   const [selectedTeamId, setSelectedTeamId] = useState('');
@@ -26,6 +29,22 @@ export default function JoinRoomPage({ params }: JoinRoomPageProps) {
   const [showScoreboard, setShowScoreboard] = useState(false);
   const [newTeamName, setNewTeamName] = useState('');
   const [showCreateTeam, setShowCreateTeam] = useState(false);
+
+  // Set room code and load quiz when joining
+  useEffect(() => {
+    // Set the room code from URL
+    if (params.room && params.room !== store.roomCode) {
+      setRoomCode(params.room.toUpperCase());
+    }
+    
+    // Load quiz spec if not already loaded (use default Rome quiz)
+    if (!store.quizSpec) {
+      const { spec } = parseYAML(EXAMPLE_QUIZ);
+      if (spec) {
+        loadQuiz(spec);
+      }
+    }
+  }, [params.room, store.roomCode, store.quizSpec, setRoomCode, loadQuiz]);
 
   useEffect(() => {
     if (!store.playerId) {
@@ -43,6 +62,14 @@ export default function JoinRoomPage({ params }: JoinRoomPageProps) {
   const currentRound = store.quizSpec?.rounds[store.roundIdx];
   const currentQuestion = currentRound?.questions[store.questionIdx];
   const playerTeam = store.teams.find((t) => t.id === selectedTeamId);
+
+  // Reset buzzer state when question changes
+  useEffect(() => {
+    if (currentQuestion) {
+      setBuzzed(false);
+      setLocked(false);
+    }
+  }, [store.roundIdx, store.questionIdx, currentQuestion]);
 
   const handleSelectTeam = (teamId: string) => {
     setSelectedTeamId(teamId);
@@ -200,14 +227,19 @@ export default function JoinRoomPage({ params }: JoinRoomPageProps) {
 
         {showScoreboard ? (
           <Scoreboard />
-        ) : store.phase === 'idle' ? (
-          <div className="flex-1 flex items-center justify-center">
-            <p className="text-lg text-text-primary opacity-75 text-center">
-              Waiting for the host to start...
-            </p>
-          </div>
         ) : (
           <>
+            {store.phase === 'idle' && (
+              <div className="mb-4 p-4 bg-bg-card rounded-lg border-2 border-accent-green/50">
+                <p className="text-sm text-text-primary opacity-75 text-center">
+                  ? Waiting for the host to start the quiz...
+                </p>
+                <p className="text-xs text-text-primary opacity-50 text-center mt-2">
+                  You can preview the questions below
+                </p>
+              </div>
+            )}
+            
             {store.timerStarted && currentRound && (
               <Timer
                 duration={currentRound.duration || 30}
@@ -223,6 +255,14 @@ export default function JoinRoomPage({ params }: JoinRoomPageProps) {
                   isRevealed={store.phase === 'revealed'}
                   onAnswer={handleLockAnswer}
                 />
+              </div>
+            )}
+            
+            {!currentQuestion && store.quizSpec && (
+              <div className="flex-1 flex items-center justify-center">
+                <p className="text-lg text-text-primary opacity-75 text-center">
+                  Quiz ready! Waiting for host to start...
+                </p>
               </div>
             )}
           </>
@@ -242,7 +282,7 @@ export default function JoinRoomPage({ params }: JoinRoomPageProps) {
                   buzzed ? 'opacity-50 cursor-not-allowed' : ''
                 }`}
               >
-                {buzzed ? '✓ Buzzed!' : 'BUZZ!'}
+                {buzzed ? '? Buzzed!' : 'BUZZ!'}
               </Button>
             )}
 
