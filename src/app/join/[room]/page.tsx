@@ -8,7 +8,8 @@ import { Timer } from '@/components/Timer';
 import { Scoreboard } from '@/components/Scoreboard';
 import { Button } from '@/components/Button';
 import { vibrate, playSound, cn } from '@/lib/utils';
-import { TEAM_COLORS } from '@/lib/constants';
+import { TEAM_COLORS, EXAMPLE_QUIZ } from '@/lib/constants';
+import { parseYAML } from '@/lib/yaml-parser';
 
 interface JoinRoomPageProps {
   params: { room: string };
@@ -30,6 +31,13 @@ export default function JoinRoomPage({ params }: JoinRoomPageProps) {
   useEffect(() => {
     if (!store.playerId) {
       store.setPlayerId(`player_${Date.now()}`);
+    }
+    // Load the quiz spec if not already loaded (same as host)
+    if (!store.quizSpec) {
+      const { spec } = parseYAML(EXAMPLE_QUIZ);
+      if (spec) {
+        store.loadQuiz(spec);
+      }
     }
     if (name && !selectedTeamId) {
       setStep('team');
@@ -200,12 +208,6 @@ export default function JoinRoomPage({ params }: JoinRoomPageProps) {
 
         {showScoreboard ? (
           <Scoreboard />
-        ) : store.phase === 'idle' ? (
-          <div className="flex-1 flex items-center justify-center">
-            <p className="text-lg text-text-primary opacity-75 text-center">
-              Waiting for the host to start...
-            </p>
-          </div>
         ) : (
           <>
             {store.timerStarted && currentRound && (
@@ -216,13 +218,19 @@ export default function JoinRoomPage({ params }: JoinRoomPageProps) {
               />
             )}
 
-            {currentQuestion && (
+            {currentQuestion ? (
               <div className="flex-1 flex flex-col bg-bg-card rounded-lg border-2 border-border-default p-6 min-h-0 mt-4">
                 <QuizCard
                   question={currentQuestion}
                   isRevealed={store.phase === 'revealed'}
                   onAnswer={handleLockAnswer}
                 />
+              </div>
+            ) : (
+              <div className="flex-1 flex items-center justify-center">
+                <p className="text-lg text-text-primary opacity-75 text-center">
+                  No question available. Waiting for the host...
+                </p>
               </div>
             )}
           </>
@@ -242,7 +250,7 @@ export default function JoinRoomPage({ params }: JoinRoomPageProps) {
                   buzzed ? 'opacity-50 cursor-not-allowed' : ''
                 }`}
               >
-                {buzzed ? '✓ Buzzed!' : 'BUZZ!'}
+                {buzzed ? '? Buzzed!' : 'BUZZ!'}
               </Button>
             )}
 
