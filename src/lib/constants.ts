@@ -261,4 +261,30 @@ rounds:
           - "Pratica di Mare (LIRE)"
         correctAnswer: 0
         explanation: "Fiumicino (FCO) is the principal international airport."
-        points: 15`;
+        points: 15
+  - id: round-5
+    title: \"Bonus Round: Gambling Industry\"
+    duration: 300
+    questions:
+      - id: r5q1
+        type: multiple_choice
+        question: \"What does RTP stand for in online casino games?\"
+        options:
+          - \"Return to Player\"
+          - \"Real-Time Processing\"
+          - \"Random Transaction Protocol\"
+          - \"Revenue Target Percentage\"
+        correctAnswer: 0
+        explanation: \"RTP (Return to Player) is the percentage of wagered money a slot or casino game will pay back to players over time.\"
+        points: 20
+      - id: r5q2
+        type: multiple_choice
+        question: \"In sports betting, what does 'EV' typically stand for?\"
+        options:
+          - \"Expected Value\"
+          - \"Enhanced Verification\"
+          - \"Event Variance\"
+          - \"Exchange Volume\"
+        correctAnswer: 0
+        explanation: \"Expected Value (EV) is a key concept in sports betting that calculates the average outcome of a bet over the long term.\"
+        points: 20`;
