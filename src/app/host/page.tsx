@@ -12,6 +12,8 @@ import { QuizCard } from '@/components/QuizCard';
 import { Timer } from '@/components/Timer';
 import type { QuizSpec } from '@/lib/types';
 import { cn } from '@/lib/utils';
+import { EXAMPLE_QUIZ } from '@/lib/constants';
+import { parseYAML } from '@/lib/yaml-parser';
 
 export default function HostPage() {
   const router = useRouter();
@@ -19,6 +21,7 @@ export default function HostPage() {
   const roomCode = useQuizStore(state => state.roomCode);
   const setHostMode = useQuizStore(state => state.setHostMode);
   const createRoom = useQuizStore(state => state.createRoom);
+  const loadQuiz = useQuizStore(state => state.loadQuiz);
   const store = useQuizStore();
   const [step, setStep] = useState<'editor' | 'session'>('editor');
   const [showScoreboard, setShowScoreboard] = useState(false);
@@ -26,6 +29,16 @@ export default function HostPage() {
   useEffect(() => {
     setHostMode(true);
   }, [setHostMode]);
+
+  // Auto-load the quiz if not already loaded
+  useEffect(() => {
+    if (!quizSpec) {
+      const { spec } = parseYAML(EXAMPLE_QUIZ);
+      if (spec) {
+        loadQuiz(spec);
+      }
+    }
+  }, [quizSpec, loadQuiz]);
 
   useEffect(() => {
     if (quizSpec) {
