@@ -1,59 +1,58 @@
 # Roamin' in Rome – 20-Minute Pub Quiz
 
-A fast, accessible, mobile-first team quiz game built with **Next.js 16**, **TypeScript**, **Tailwind CSS**, and **Zustand**. Perfect for quiz nights and team events. Works on phones, tablets, and desktop. Deploy to Vercel in seconds.
+A simple, accessible quiz host app built with **Next.js 16**, **TypeScript**, **Tailwind CSS**, and **Zustand**. Perfect for quiz nights where the host reads questions and players write answers on paper.
 
 **Note:** This app is configured for a one-time quiz night with the "Roamin' in Rome" quiz hardcoded. The quiz loads automatically - no YAML editing needed!
 
 ## Features
 
-✅ **Two Game Modes**
-- **Phones-as-Buzzers**: Players join via room code, real-time sync (optional)
-- **Team Mode**: Single-screen pass-the-phone play (no external services)
+✅ **Simple Host Mode**
+- Host reads questions from device/tablet
+- Large, readable question text (3xl-4xl font size)
+- Players write answers on paper (no devices needed)
+- Toggle to show/hide answers during quiz
+- Easy navigation: Previous, Next, Show Answer
+
+✅ **End-of-Quiz Summary**
+- Complete list of all questions and answers
+- Correct answers highlighted in green
+- Explanations included for each question
+- Perfect for reading out loud to mark papers
+- Organized by round
 
 ✅ **Quiz Management**
 - Rome quiz pre-loaded and ready to use
+- Delightful Italian-themed UI with flag colors
 - Automatic quiz loading - no configuration needed
 - Simple one-click start for quiz night
 
 ✅ **Question Types**
-- Multiple choice
-- Picture (with lazy loading)
-- Audio
-- Speed (reaction time scoring)
-- Wager Final (bet from current score)
-
-✅ **Gameplay**
-- Per-round timer with visual progress
-- Optimistic UI, idempotent events
-- Haptic feedback (Vibration API)
-- Audio cues (muted by default)
-- Streak bonuses
-- Animated scoreboard
+- Multiple choice (current implementation)
+- Extensible for picture, audio, speed, and wager questions
 
 ✅ **Accessibility (WCAG AA)**
 - Large text option
 - High-contrast mode
-- ARIA live regions (timer, reveals)
 - Semantic HTML, keyboard navigation
 - Focus indicators
+- Safe area insets (notch-aware)
 
 ✅ **Mobile-First Design**
-- One-hand reach (48px+ targets)
+- Optimized for tablets and phones
+- Large touch targets
 - Sticky bottom controls
-- Safe area insets (notch-aware)
-- Swipe gestures (framer-motion)
-- PWA ready (installable, offline)
+- Italian flag-inspired color scheme
+- Clean, readable interface
 
-✅ **Color Scheme** (no purple)
-- Muted Green: `#1e7f4f` (primary actions)
-- Soft Red: `#d24848` (highlights, incorrect)
-- Off-White: `#f7f7f5` (backgrounds)
-- White: `#ffffff` (surfaces)
-- Dark Text: `#0f1210`
+✅ **Color Scheme** (Italian Flag Theme)
+- Vibrant Green: `#009246` (Italian flag green)
+- Vibrant Red: `#ce2b37` (Italian flag red)
+- White: `#ffffff` (Italian flag white)
+- Clean backgrounds and high contrast text
 
 ✅ **Performance**
 - Lean dependencies
-- Cold start < 2s on Vercel
+- Fast loading
 - Static pages + API routes
 - CSS variables for theming
 - Tailwind CSS purging
@@ -99,51 +98,24 @@ vercel
 1. **Start the Quiz**
    - Click "Host Quiz" on the landing page
    - The Rome quiz loads automatically
-   - Room code is generated automatically (4-character code like `A1B2`)
+   - Click "Start Quiz" to begin
 
-2. **Share Room Code**
-   - Copy the room code or shareable link
-   - Display on projector or share via messaging
-   - Players use this code to join
+2. **Read Questions**
+   - Questions appear in large, readable text (3xl-4xl font)
+   - Read each question aloud to players
+   - Players write their answers on paper
 
-3. **Run Session**
-   - Click "Start Session" to begin
-   - Bottom control bar: Play/Pause, Reveal, Next/Prev, Settings
-   - Keyboard shortcuts: Space, R, →, ←, A+, ◐, ⛶
-   - Navigate through 4 rounds with 20 questions total
+3. **Navigate Questions**
+   - Use "Previous" to go back
+   - Use "Next" to advance
+   - Use "Show Answer" to reveal the correct answer (optional)
+   - Click "Finish" after the last question
 
-4. **Scoreboard**
-   - Toggle scoreboard anytime to see live standings
-   - Animated rank changes as scores update
-
-### Player Join (`/join/:room?name=...`)
-
-1. **Enter Room Code**
-   - Click "Join with Code" on landing page
-   - Enter the 4-character room code from host
-
-2. **Enter Your Name**
-   - Type your name and continue
-
-3. **Create or Join Team**
-   - If no teams exist: Create a new team with a name
-   - If teams exist: Join an existing team OR create a new one
-   - Each team gets a unique color
-
-4. **Play**
-   - Wait for host to start the question
-   - Buzz in when ready (big green BUZZ button)
-   - Lock in your answer by tapping an option
-   - See your score after the host reveals answers
-
-### Team Mode (`/play`) - Alternative Single-Screen Mode
-
-1. Host navigates to `/play` instead of `/host`
-2. Add teams on the host device (one-hand reach)
-3. Pass phone around - each team taps buzzer for their turn
-4. Lock answers, reveal, score
-5. Navigate to next question
-6. **Works completely offline** - no internet needed after first load
+4. **End-of-Quiz Summary**
+   - After clicking "Finish", view all questions and answers
+   - Read through the summary to mark papers
+   - Correct answers are highlighted in green
+   - Explanations are included for each question
 
 ---
 
@@ -151,7 +123,7 @@ vercel
 
 The app comes pre-loaded with a 20-minute Rome-themed quiz:
 
-- **4 Rounds** (5 minutes each):
+- **4 Rounds**:
   1. **Ancient Rome** - Historical questions about the Colosseum, Via Appia, Seven Hills, Pantheon, and Julius Caesar
   2. **Landmarks & City Layout** - Trevi Fountain, Piazza Navona, Spanish Steps, St. Peter's Basilica
   3. **Food, Drink & Daily Life** - Roman pasta dishes, street food, Campo de' Fiori, Bocca della Verità
@@ -174,39 +146,27 @@ quizSpec           // Quiz metadata + questions
 phase              // "idle" | "showing" | "revealed" | "finished"
 roundIdx           // Current round
 questionIdx        // Current question
-teams[]            // Team list { id, name, color }
-scores{}           // teamId -> score
-streaks{}          // teamId -> consecutive correct
-settings           // soundOn, largeText, highContrast, etc.
+settings           // largeText, highContrast, etc.
 ```
 
 All state persists to `localStorage` automatically.
 
 ### Pages
 
-- `/` – Landing (Host / Join / Example)
-- `/host` – YAML editor, room code, session controls
-- `/play` – Team Mode single-screen
-- `/join/:room` – Player join + buzzer UI
-- `/scoreboard` – Public read-only standings
+- `/` – Landing page (Host Quiz button)
+- `/host` – Main quiz interface with questions and summary
 
 ### Components
 
 - `Button.tsx` – Base button with variants
-- `YAMLEditor.tsx` – Validator with error display
-- `RoomCode.tsx` – Room code + shareable link
-- `HostControls.tsx` – Sticky bottom bar + shortcuts
-- `Timer.tsx` – Countdown with progress ring
+- `YAMLEditor.tsx` – Validator with error display (for custom quizzes)
 - `QuizCard.tsx` – Polymorphic card renderer
-- `Scoreboard.tsx` – Animated standings
+- `Timer.tsx` – Small countdown timer (minimized header)
 
 ### Card Types
 
-- `MultipleChoiceCard.tsx`
-- `PictureCard.tsx`
-- `AudioCard.tsx`
-- `SpeedCard.tsx`
-- `WagerFinalCard.tsx`
+- `MultipleChoiceCard.tsx` – Multiple choice questions (currently used)
+- Other card types available but not used in current simplified mode
 
 ---
 
@@ -216,10 +176,9 @@ All state persists to `localStorage` automatically.
 
 - **Large Text**: Toggle to increase base font from 16px to 18px
 - **High Contrast**: Deeper greens/reds (#0d4a2f, #a01e1e), black text
-- **ARIA Live**: Timer ticks, answer reveals announced
 - **Focus Indicators**: 2px green outlines with offset
-- **Semantic HTML**: Proper `<button>`, `<form>`, `role=` attributes
-- **Keyboard**: Tab, Space, Enter, Arrow keys work
+- **Semantic HTML**: Proper `<button>`, semantic markup
+- **Keyboard Navigation**: Tab, Enter, Arrow keys work
 
 ### WCAG AA Compliance
 
@@ -227,6 +186,7 @@ All state persists to `localStorage` automatically.
 - 48px+ touch targets
 - 2px focus outlines
 - Dark text on light backgrounds
+- Large, readable question text (3xl-4xl)
 
 ---
 
@@ -234,46 +194,10 @@ All state persists to `localStorage` automatically.
 
 - **Manifest**: `public/manifest.json` (installable)
 - **Service Worker**: `public/service-worker.js` (caching strategy)
-- **Offline Support**: Team Mode works after first load
+- **Offline Support**: Works after first load
 - **Icons**: 192x192, 512x512 (in `public/`)
 
 Register service worker in your browser to enable offline.
-
----
-
-## Optional: Realtime Sync
-
-By default, Team Mode works **without** external services (fully local).
-
-To add real-time sync for Phones-as-Buzzers mode:
-
-### Option 1: Vercel KV + WebSockets (Recommended)
-
-```bash
-vercel env add NEXT_PUBLIC_REALTIME
-# Answer: vercel
-```
-
-- Uses Vercel KV for room state
-- WebSockets for real-time sync
-- Zero additional cost with Vercel Hobby
-
-### Option 2: Pusher
-
-```bash
-npm install pusher pusher-js
-```
-
-Set env vars:
-
-```
-NEXT_PUBLIC_REALTIME=pusher
-NEXT_PUBLIC_PUSHER_KEY=...
-NEXT_PUBLIC_PUSHER_CLUSTER=...
-PUSHER_SECRET=...
-```
-
-If `NEXT_PUBLIC_REALTIME` is unset, app runs in Team Mode (local only).
 
 ---
 
@@ -307,42 +231,32 @@ Works on any Node.js host (Heroku, Railway, DigitalOcean, etc.).
 quiz/
 ├── src/
 │   ├── app/
-│   │   ├── layout.tsx           # Root + meta
+│   │   ├── layout.tsx           # Root + meta + Italian flag accent
 │   │   ├── page.tsx             # Landing
-│   │   ├── host/page.tsx        # Host mode
-│   │   ├── play/page.tsx        # Team Mode
-│   │   ├── join/page.tsx        # Join flow
-│   │   ├── join/[room]/page.tsx # Player buzzer
-│   │   ├── scoreboard/page.tsx  # Standings
+│   │   ├── host/page.tsx        # Host mode (main interface)
 │   │   ├── api/
 │   │   │   └── quiz/validate/route.ts
-│   │   └── globals.css
+│   │   └── globals.css          # Italian flag colors
 │   ├── components/
 │   │   ├── Button.tsx
 │   │   ├── LandingPage.tsx
-│   │   ├── YAMLEditor.tsx
-│   │   ├── RoomCode.tsx
-│   │   ├── HostControls.tsx
-│   │   ├── Timer.tsx
+│   │   ├── YAMLEditor.tsx       # For custom quizzes
+│   │   ├── Timer.tsx            # Small countdown timer
 │   │   ├── QuizCard.tsx
-│   │   ├── Scoreboard.tsx
 │   │   └── cards/
 │   │       ├── MultipleChoiceCard.tsx
-│   │       ├── PictureCard.tsx
-│   │       ├── AudioCard.tsx
-│   │       ├── SpeedCard.tsx
-│   │       └── WagerFinalCard.tsx
+│   │       └── ... (other card types available)
 │   ├── lib/
 │   │   ├── types.ts
-│   │   ├── constants.ts
+│   │   ├── constants.ts         # Rome quiz hardcoded here
 │   │   ├── utils.ts
 │   │   └── yaml-parser.ts
 │   └── store/
-│       └── quiz.ts              # Zustand
+│       └── quiz.ts              # Zustand state management
 ├── public/
 │   ├── manifest.json
 │   ├── service-worker.js
-│   └── round-assets/            # Quiz media
+│   └── round-assets/            # Quiz media (if needed)
 ├── package.json
 ├── tsconfig.json
 ├── next.config.mjs
@@ -411,21 +325,7 @@ import { decodeQuizFromUrl } from '@/lib/utils';
 const yaml = decodeQuizFromUrl(urlPayload);
 ```
 
-### Keyboard Shortcuts (Host Mode)
-
-- **Space**: Play/Pause
-- **R**: Reveal Answer
-- **→**: Next Question
-- **←**: Previous Question
-
----
-
 ## Troubleshooting
-
-### "Realtime unavailable; local play mode" banner
-
-- `NEXT_PUBLIC_REALTIME` is unset → use Team Mode
-- Or real-time service is down → graceful fallback to local
 
 ### High Contrast not applying
 
@@ -437,6 +337,12 @@ const yaml = decodeQuizFromUrl(urlPayload);
 - Open DevTools → Application → Service Workers
 - Verify "Offline" toggle; reload page
 - Check `public/service-worker.js`
+
+### Questions not displaying
+
+- Ensure quiz is loaded (should auto-load on `/host`)
+- Check browser console for errors
+- Verify `EXAMPLE_QUIZ` in `src/lib/constants.ts` is valid YAML
 
 ---
 
