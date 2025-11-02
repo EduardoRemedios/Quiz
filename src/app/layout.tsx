@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { StoreHydration } from '@/components/StoreHydration';
 
 export const metadata: Metadata = {
   title: 'Symphony Quiz',
@@ -28,6 +29,7 @@ export default function RootLayout({
         <meta name="viewport" content="viewport-fit=cover" />
       </head>
       <body className="bg-bg-primary text-text-primary">
+        <StoreHydration />
         {children}
       </body>
     </html>

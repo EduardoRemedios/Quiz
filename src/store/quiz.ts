@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import type { GameState, Team, QuizSpec } from '@/lib/types';
 import { generateTeamId, generatePlayerId, generateRoomCode } from '@/lib/utils';
 
@@ -178,6 +178,18 @@ export const useQuizStore = create<QuizStore>()(
     }),
     {
       name: 'quiz-store',
+      storage: createJSONStorage(() => {
+        // Only use localStorage on client side
+        if (typeof window !== 'undefined') {
+          return localStorage;
+        }
+        // Return a no-op storage for SSR
+        return {
+          getItem: () => null,
+          setItem: () => {},
+          removeItem: () => {},
+        };
+      }),
       partialize: (state) => ({
         quizSpec: state.quizSpec,
         teams: state.teams,
