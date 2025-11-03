@@ -50,6 +50,13 @@ export default function JoinRoomPage({ params }: JoinRoomPageProps) {
     if (!store.playerId) {
       store.setPlayerId(`player_${Date.now()}`);
     }
+    // Load the quiz spec if not already loaded (same as host)
+    if (!store.quizSpec) {
+      const { spec } = parseYAML(EXAMPLE_QUIZ);
+      if (spec) {
+        store.loadQuiz(spec);
+      }
+    }
     if (name && !selectedTeamId) {
       setStep('team');
       // Show create team option if no teams exist
@@ -248,13 +255,19 @@ export default function JoinRoomPage({ params }: JoinRoomPageProps) {
               />
             )}
 
-            {currentQuestion && (
+            {currentQuestion ? (
               <div className="flex-1 flex flex-col bg-bg-card rounded-lg border-2 border-border-default p-6 min-h-0 mt-4">
                 <QuizCard
                   question={currentQuestion}
                   isRevealed={store.phase === 'revealed'}
                   onAnswer={handleLockAnswer}
                 />
+              </div>
+            ) : (
+              <div className="flex-1 flex items-center justify-center">
+                <p className="text-lg text-text-primary opacity-75 text-center">
+                  No question available. Waiting for the host...
+                </p>
               </div>
             )}
             
