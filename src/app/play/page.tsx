@@ -33,7 +33,7 @@ export default function PlayPage() {
 
   if (!store.quizSpec) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
+      <div className="h-full flex items-center justify-center p-4">
         <div className="text-center">
           <p className="text-lg text-text-primary mb-4">No quiz loaded</p>
           <Button
@@ -51,28 +51,28 @@ export default function PlayPage() {
 
   if (step === 'setup') {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-4 safe-padding">
-        <div className="w-full max-w-md space-y-6">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-accent-green mb-2">
+      <div className="h-full flex flex-col items-center justify-center p-4 safe-padding overflow-auto">
+        <div className="w-full max-w-md space-y-5">
+          <div className="text-center mb-6">
+            <h1 className="text-2xl font-bold text-accent-green mb-2">
               {store.quizSpec.title}
             </h1>
-            <p className="text-sm text-text-primary opacity-75">
+            <p className="text-sm text-text-primary/70">
               Team Mode • Pass the Phone
             </p>
           </div>
 
-          <div className="bg-bg-card rounded-lg border-2 border-border-default p-6 space-y-4">
+          <div className="bg-bg-card rounded-2xl border-2 border-border-default shadow-sm p-5 space-y-4">
             <h2 className="text-lg font-bold text-text-primary">Setup Teams</h2>
 
             <div className="space-y-2">
               {store.teams.map((team) => (
                 <div
                   key={team.id}
-                  className="flex items-center gap-3 p-3 bg-bg-primary rounded-lg"
+                  className="flex items-center gap-3 p-3 bg-bg-primary rounded-xl border border-border-default"
                 >
                   <div
-                    className="w-4 h-4 rounded-full"
+                    className="w-4 h-4 rounded-full shadow-sm"
                     style={{ backgroundColor: team.color }}
                   />
                   <span className="flex-1 font-semibold text-text-primary">
@@ -80,7 +80,7 @@ export default function PlayPage() {
                   </span>
                   <button
                     onClick={() => store.removeTeam(team.id)}
-                    className="text-accent-red opacity-75 hover:opacity-100 text-sm font-bold"
+                    className="text-accent-red opacity-70 hover:opacity-100 text-lg font-bold transition-opacity"
                   >
                     ✕
                   </button>
@@ -97,7 +97,7 @@ export default function PlayPage() {
                   if (e.key === 'Enter') addTeam(newTeamName);
                 }}
                 placeholder="Team name"
-                className="flex-1 px-3 py-2 rounded-lg border-2 border-border-default bg-bg-primary text-text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-green"
+                className="flex-1 px-4 py-2.5 rounded-xl border-2 border-border-default bg-bg-primary text-text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-green transition-colors"
               />
               <Button
                 variant="primary"
@@ -134,17 +134,17 @@ export default function PlayPage() {
 
   return (
     <div
-      className="min-h-screen flex flex-col pb-32"
+      className="h-full flex flex-col pb-24"
       data-large-text={store.largeText || undefined}
       data-high-contrast={store.highContrast || undefined}
     >
       <div className="flex-1 flex flex-col overflow-auto p-4 safe-padding">
-        <div className="mb-4">
-          <h1 className="text-2xl font-bold text-accent-green">
+        <div className="mb-4 flex-shrink-0">
+          <h1 className="text-xl font-bold text-accent-green">
             {store.quizSpec.title}
           </h1>
           {currentRound && (
-            <p className="text-xs text-text-primary opacity-75">
+            <p className="text-xs text-text-primary/70">
               {currentRound.title} • Q{store.questionIdx + 1}/{currentRound.questions.length}
             </p>
           )}
@@ -167,7 +167,7 @@ export default function PlayPage() {
             )}
 
             {currentQuestion && (
-              <div className="flex-1 flex flex-col bg-bg-card rounded-lg border-2 border-border-default p-6 min-h-0 mt-4">
+              <div className="flex-1 flex flex-col bg-bg-card rounded-2xl border-2 border-border-default shadow-sm p-6 min-h-0 mt-4 overflow-auto">
                 <QuizCard
                   question={currentQuestion}
                   isRevealed={store.phase === 'revealed'}
@@ -179,7 +179,7 @@ export default function PlayPage() {
         )}
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 bg-bg-card border-t-2 border-border-default safe-padding safe-bottom">
+      <div className="fixed bottom-0 left-0 right-0 bg-bg-card/95 backdrop-blur-xl border-t-2 border-accent-green shadow-lg safe-padding safe-bottom">
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-3 gap-2 p-3">
             <Button

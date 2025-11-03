@@ -19,21 +19,21 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-8 safe-padding">
-      <div className="text-center mb-12">
-        <div className="mb-4 flex items-center justify-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-accent-green"></div>
-          <div className="w-3 h-3 rounded-full bg-accent-white border-2 border-accent-green"></div>
-          <div className="w-3 h-3 rounded-full bg-accent-red"></div>
+    <div className="h-full flex flex-col items-center justify-center px-4 py-6 safe-padding">
+      <div className="text-center mb-8">
+        <div className="mb-6 flex items-center justify-center gap-2.5">
+          <div className="w-4 h-4 rounded-full bg-accent-green shadow-sm"></div>
+          <div className="w-4 h-4 rounded-full bg-accent-white border-2 border-accent-green shadow-sm"></div>
+          <div className="w-4 h-4 rounded-full bg-accent-red shadow-sm"></div>
         </div>
-        <h1 className="text-4xl font-bold text-accent-green mb-2">Roamin' in Rome</h1>
-        <p className="text-text-primary opacity-75 mb-2">20-Minute Pub Quiz</p>
-        <p className="text-sm text-text-primary opacity-60">
+        <h1 className="text-5xl font-bold text-accent-green mb-3 tracking-tight">Roamin' in Rome</h1>
+        <p className="text-lg text-text-primary/80 mb-2 font-medium">20-Minute Pub Quiz</p>
+        <p className="text-sm text-text-primary/60">
           Host reads questions ? Players write answers on paper
         </p>
       </div>
 
-      <div className="w-full max-w-sm space-y-4">
+      <div className="w-full max-w-sm space-y-3">
         <Button 
           variant="primary" 
           size="lg" 
@@ -44,7 +44,7 @@ export default function LandingPage() {
         </Button>
       </div>
 
-      <div className="mt-16 text-center text-xs text-text-primary opacity-50">
+      <div className="mt-auto pt-8 text-center text-xs text-text-primary/50">
         <p>Symphony Solutions, Rome</p>
       </div>
     </div>

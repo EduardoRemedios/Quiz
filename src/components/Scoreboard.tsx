@@ -12,31 +12,31 @@ export function Scoreboard() {
   const rankedTeams = [...teams].sort((a, b) => (scores[b.id] ?? 0) - (scores[a.id] ?? 0));
 
   return (
-    <div className="w-full space-y-3">
+    <div className="w-full space-y-2.5">
       {rankedTeams.map((team, idx) => (
         <motion.div
           key={team.id}
           layout
           transition={{ type: 'spring', stiffness: 400, damping: 40 }}
           className={cn(
-            "flex items-center gap-4 p-4 bg-bg-card rounded-lg border-2 transition-colors",
-            idx === 0 ? "border-accent-green shadow-md shadow-accent-green/20" : "border-border-default hover:border-accent-green/50"
+            "flex items-center gap-4 p-4 bg-bg-card rounded-2xl border-2 transition-all shadow-sm",
+            idx === 0 ? "border-accent-green shadow-lg shadow-accent-green/25" : "border-border-default hover:border-accent-green/50 hover:shadow-md"
           )}
         >
           <div className={cn(
             "text-lg font-bold min-w-8",
-            idx === 0 ? "text-accent-green" : "text-text-primary opacity-75"
+            idx === 0 ? "text-accent-green" : "text-text-primary/70"
           )}>
             {idx + 1}
           </div>
           <div
-            className="w-4 h-4 rounded-full"
-            style={{ backgroundColor: team.color || '#009246' }}
+            className="w-4 h-4 rounded-full shadow-sm"
+            style={{ backgroundColor: team.color || '#00b34d' }}
           />
           <div className="flex-1">
             <div className="font-semibold text-text-primary">{team.name}</div>
             {(streaks[team.id] ?? 0) > 0 && (
-              <div className="text-xs text-accent-green">
+              <div className="text-xs text-accent-green font-medium">
                 Streak: {streaks[team.id]}
               </div>
             )}

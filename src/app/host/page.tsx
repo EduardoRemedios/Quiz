@@ -45,13 +45,13 @@ export default function HostPage() {
 
   if (step === 'editor') {
     return (
-      <div className="min-h-screen flex flex-col p-4 safe-padding">
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold text-accent-green mb-2">Host Quiz</h1>
-          <p className="text-sm text-text-primary opacity-75">Paste or edit your quiz YAML below</p>
+      <div className="h-full flex flex-col p-4 safe-padding">
+        <div className="mb-4">
+          <h1 className="text-2xl font-bold text-accent-green mb-1.5">Host Quiz</h1>
+          <p className="text-sm text-text-primary/70">Paste or edit your quiz YAML below</p>
         </div>
 
-        <div className="flex-1 flex flex-col gap-4 min-h-0">
+        <div className="flex-1 flex flex-col gap-4 min-h-0 overflow-hidden">
           <YAMLEditor
             initialValue={store.quizSpec ? '' : ''}
             onValidated={(spec: QuizSpec) => {
@@ -74,20 +74,20 @@ export default function HostPage() {
   // Summary view - show all questions and answers
   if (step === 'summary') {
     return (
-      <div className="min-h-screen flex flex-col p-4 safe-padding pb-32">
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold text-accent-green mb-2">
+      <div className="h-full flex flex-col p-4 safe-padding pb-24">
+        <div className="mb-4 flex-shrink-0">
+          <h1 className="text-2xl font-bold text-accent-green mb-1.5">
             {store.quizSpec.title} - Answers
           </h1>
-          <p className="text-sm text-text-primary opacity-75">
+          <p className="text-sm text-text-primary/70">
             All questions and answers
           </p>
         </div>
 
-        <div className="space-y-8 overflow-auto flex-1">
+        <div className="space-y-6 overflow-auto flex-1 -mx-4 px-4">
           {store.quizSpec.rounds.map((round, roundIdx) => (
             <div key={round.id} className="space-y-6">
-              <h2 className="text-2xl font-bold text-accent-green border-b-2 border-accent-green pb-2">
+              <h2 className="text-xl font-bold text-accent-green border-b-2 border-accent-green pb-2">
                 {round.title}
               </h2>
               {round.questions.map((question, qIdx) => {
@@ -96,7 +96,7 @@ export default function HostPage() {
                   : store.quizSpec!.rounds.slice(0, roundIdx).reduce((sum, r) => sum + r.questions.length, 0) + qIdx + 1;
                 
                 return (
-                  <div key={question.id} className="bg-bg-card rounded-lg border-2 border-border-default p-6">
+                  <div key={question.id} className="bg-bg-card rounded-2xl border-2 border-border-default shadow-sm p-5">
                     <div className="mb-4">
                       <span className="text-sm font-semibold text-accent-green">Question {questionNum}</span>
                       <p className="text-xl font-bold text-text-primary mt-2">
@@ -109,9 +109,9 @@ export default function HostPage() {
                         {question.options.map((option, idx) => (
                           <div
                             key={idx}
-                            className={`p-3 rounded-lg border-2 ${
+                            className={`p-3 rounded-xl border-2 transition-all ${
                               question.correctAnswer === idx
-                                ? 'bg-accent-green text-white border-accent-green font-bold'
+                                ? 'bg-accent-green text-white border-accent-green font-semibold shadow-md'
                                 : 'bg-bg-primary border-border-default'
                             }`}
                           >
@@ -122,7 +122,7 @@ export default function HostPage() {
                     )}
                     
                     {question.explanation && (
-                      <div className="mt-4 p-3 bg-accent-green/10 rounded-lg border-l-4 border-accent-green">
+                      <div className="mt-4 p-3 bg-accent-green/10 rounded-xl border-l-4 border-accent-green">
                         <p className="text-sm text-text-primary">
                           <span className="font-semibold">Explanation:</span> {question.explanation}
                         </p>
@@ -130,7 +130,7 @@ export default function HostPage() {
                     )}
                     
                     {question.points && (
-                      <p className="text-xs text-text-primary opacity-50 mt-2">
+                      <p className="text-xs text-text-primary/50 mt-2">
                         Points: {question.points}
                       </p>
                     )}
@@ -141,7 +141,7 @@ export default function HostPage() {
           ))}
         </div>
 
-        <div className="fixed bottom-0 left-0 right-0 bg-bg-card border-t-2 border-accent-green safe-padding safe-bottom">
+        <div className="fixed bottom-0 left-0 right-0 bg-bg-card/95 backdrop-blur-xl border-t-2 border-accent-green shadow-lg safe-padding safe-bottom">
           <div className="max-w-4xl mx-auto p-4">
             <Button
               variant="primary"
@@ -162,28 +162,28 @@ export default function HostPage() {
 
   return (
     <div
-      className="min-h-screen flex flex-col pb-32"
+      className="h-full flex flex-col pb-24"
       data-large-text={store.largeText || undefined}
       data-high-contrast={store.highContrast || undefined}
     >
       <div className="flex-1 flex flex-col overflow-auto p-4 safe-padding">
-        <div className="mb-4 text-center">
-          <h1 className="text-2xl font-bold text-accent-green">
+        <div className="mb-4 text-center flex-shrink-0">
+          <h1 className="text-xl font-bold text-accent-green">
             {store.quizSpec.title}
           </h1>
           {currentRound && (
-            <p className="text-sm text-text-primary opacity-75 mt-1">
+            <p className="text-xs text-text-primary/70 mt-1">
               {currentRound.title} • Question {store.questionIdx + 1} of {currentRound.questions.length}
             </p>
           )}
         </div>
 
         {store.phase === 'idle' ? (
-          <div className="flex flex-col items-center justify-center gap-6 flex-1">
+          <div className="flex flex-col items-center justify-center gap-5 flex-1">
             <h2 className="text-2xl font-bold text-center text-text-primary">
               Ready to start?
             </h2>
-            <p className="text-sm text-text-primary opacity-75 text-center max-w-md">
+            <p className="text-sm text-text-primary/70 text-center max-w-md">
               Read questions out loud. Players write answers on paper.
             </p>
             <Button
@@ -198,32 +198,32 @@ export default function HostPage() {
             </Button>
           </div>
         ) : (
-          <div className="flex-1 flex flex-col gap-4">
+          <div className="flex-1 flex flex-col gap-4 min-h-0">
             {currentQuestion && (
-              <div className="flex-1 flex flex-col bg-bg-card rounded-lg border-2 border-accent-green p-8 min-h-0">
-                <div className="mb-6">
+              <div className="flex-1 flex flex-col bg-bg-card rounded-2xl border-2 border-accent-green shadow-lg p-6 min-h-0 overflow-auto">
+                <div className="mb-4 flex-shrink-0">
                   <button
                     onClick={() => setShowAnswers(!showAnswers)}
-                    className="text-sm font-semibold text-accent-green hover:underline"
+                    className="text-sm font-semibold text-accent-green hover:opacity-80 transition-opacity"
                   >
                     {showAnswers ? 'Hide' : 'Show'} Answer
                   </button>
                 </div>
                 
                 <div className="flex-1 flex flex-col justify-center">
-                  <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-8 leading-tight">
+                  <h2 className="text-2xl md:text-3xl font-bold text-text-primary mb-6 leading-tight">
                     {currentQuestion.question}
                   </h2>
                   
                   {currentQuestion.type === 'multiple_choice' && currentQuestion.options && (
-                    <div className="space-y-4 mt-6">
+                    <div className="space-y-3 mt-4">
                       {currentQuestion.options.map((option, idx) => (
                         <div
                           key={idx}
-                          className={`p-4 rounded-lg border-2 text-xl ${
+                          className={`p-4 rounded-xl border-2 text-lg transition-all ${
                             showAnswers && currentQuestion.correctAnswer === idx
-                              ? 'bg-accent-green text-white border-accent-green font-bold'
-                              : 'bg-bg-primary border-border-default'
+                              ? 'bg-accent-green text-white border-accent-green font-semibold shadow-md'
+                              : 'bg-bg-primary border-border-default hover:border-accent-green/50'
                           }`}
                         >
                           <span className="font-bold mr-3">{String.fromCharCode(65 + idx)})</span>
@@ -234,8 +234,8 @@ export default function HostPage() {
                   )}
                   
                   {showAnswers && currentQuestion.explanation && (
-                    <div className="mt-6 p-4 bg-accent-green/10 rounded-lg border-l-4 border-accent-green">
-                      <p className="text-lg text-text-primary">
+                    <div className="mt-5 p-4 bg-accent-green/10 rounded-xl border-l-4 border-accent-green">
+                      <p className="text-base text-text-primary">
                         <span className="font-semibold">Explanation:</span> {currentQuestion.explanation}
                       </p>
                     </div>
@@ -248,7 +248,7 @@ export default function HostPage() {
       </div>
 
       {store.phase !== 'idle' && (
-        <div className="fixed bottom-0 left-0 right-0 bg-bg-card border-t-2 border-accent-green safe-padding safe-bottom">
+        <div className="fixed bottom-0 left-0 right-0 bg-bg-card/95 backdrop-blur-xl border-t-2 border-accent-green shadow-lg safe-padding safe-bottom">
           <div className="max-w-4xl mx-auto">
             <div className="grid grid-cols-3 gap-2 p-3">
               <Button

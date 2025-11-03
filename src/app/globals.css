@@ -3,16 +3,16 @@
 @tailwind utilities;
 
 :root {
-  --accent-green: #009246; /* Vibrant Italian flag green */
-  --accent-red: #ce2b37; /* Vibrant Italian flag red */
+  --accent-green: #00b34d; /* More vibrant Italian flag green */
+  --accent-red: #e63946; /* More vibrant Italian flag red */
   --accent-white: #ffffff; /* Italian flag white */
-  --bg: #fefefe; /* Clean white background with slight warmth */
+  --bg: #fafafa; /* Clean white background with slight warmth */
   --card: #ffffff;
   --text: #1a1a1a;
-  --border: #d4d4d4;
+  --border: #e5e5e5;
   --disabled: #c0c0b8;
-  --success: #009246; /* Use Italian green for success */
-  --warning: #ce2b37; /* Use Italian red for warnings */
+  --success: #00b34d; /* Use Italian green for success */
+  --warning: #e63946; /* Use Italian red for warnings */
   
   --base-font-size: 16px;
 }
@@ -43,11 +43,17 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--bg);
   color: var(--text);
+  overflow: hidden;
+  height: 100%;
+  height: 100dvh;
 }
 
 body {
-  min-height: 100vh;
-  min-height: 100dvh;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  overflow: hidden;
 }
 
 button:focus-visible {

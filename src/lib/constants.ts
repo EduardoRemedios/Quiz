@@ -1,13 +1,13 @@
 export const COLORS = {
-  accentGreen: '#009246', // Vibrant Italian flag green
-  accentRed: '#ce2b37', // Vibrant Italian flag red
-  bg: '#fefefe',
+  accentGreen: '#00b34d', // More vibrant Italian flag green
+  accentRed: '#e63946', // More vibrant Italian flag red
+  bg: '#fafafa',
   card: '#ffffff',
   text: '#1a1a1a',
-  border: '#d4d4d4',
+  border: '#e5e5e5',
   disabled: '#c0c0b8',
-  success: '#009246', // Use Italian green for success
-  warning: '#ce2b37', // Use Italian red for warnings
+  success: '#00b34d', // Use Italian green for success
+  warning: '#e63946', // Use Italian red for warnings
 };
 
 export const DEFAULT_ROUND_DURATION = 30;
@@ -15,12 +15,12 @@ export const DEFAULT_WAGER_DURATION = 60;
 export const DEFAULT_POINTS = 10;
 
 export const TEAM_COLORS = [
-  '#009246', // Italian green
-  '#ce2b37', // Italian red
-  '#2a9d6f', // Variant green
-  '#c96969', // Variant red
-  '#1a5f3f', // Dark green
-  '#e67c6b', // Light red
+  '#00b34d', // Italian green
+  '#e63946', // Italian red
+  '#2ec970', // Variant green
+  '#ff6b7a', // Variant red
+  '#008c3a', // Dark green
+  '#ff4757', // Light red
 ];
 
 export const EXAMPLE_QUIZ = `title: "Roamin' in Rome — 20-Minute Pub Quiz"

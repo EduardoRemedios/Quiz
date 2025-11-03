@@ -107,29 +107,29 @@ export default function JoinRoomPage({ params }: JoinRoomPageProps) {
 
   if (step === 'team') {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-4 safe-padding">
-        <div className="w-full max-w-md space-y-6">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-accent-green mb-2">
+      <div className="h-full flex flex-col items-center justify-center p-4 safe-padding overflow-auto">
+        <div className="w-full max-w-md space-y-5">
+          <div className="text-center mb-6">
+            <h1 className="text-2xl font-bold text-accent-green mb-2">
               Join {params.room}
             </h1>
-            <p className="text-sm text-text-primary opacity-75">
+            <p className="text-sm text-text-primary/70">
               Hi {name}, {store.teams.length > 0 ? 'choose your team:' : 'create a team to get started:'}
             </p>
           </div>
 
           {store.teams.length > 0 && (
-            <div className="space-y-3">
-              <p className="text-sm font-semibold text-text-primary opacity-75">Existing Teams:</p>
+            <div className="space-y-2">
+              <p className="text-sm font-semibold text-text-primary/70">Existing Teams:</p>
               {store.teams.map((team, idx) => (
                 <button
                   key={team.id}
                   onClick={() => handleSelectTeam(team.id)}
-                  className="w-full p-4 rounded-lg border-2 border-border-default bg-bg-card text-text-primary hover:border-accent-green transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-green"
+                  className="w-full p-4 rounded-xl border-2 border-border-default bg-bg-card text-text-primary hover:border-accent-green transition-all shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-green"
                 >
                   <div className="flex items-center gap-3">
                     <div
-                      className="w-6 h-6 rounded-full"
+                      className="w-5 h-5 rounded-full shadow-sm"
                       style={{ backgroundColor: team.color }}
                     />
                     <span className="font-semibold">{team.name}</span>
@@ -140,8 +140,8 @@ export default function JoinRoomPage({ params }: JoinRoomPageProps) {
           )}
 
           {showCreateTeam || store.teams.length === 0 ? (
-            <div className="space-y-3 bg-bg-card rounded-lg border-2 border-border-default p-4">
-              <p className="text-sm font-semibold text-text-primary opacity-75">
+            <div className="space-y-3 bg-bg-card rounded-2xl border-2 border-border-default shadow-sm p-4">
+              <p className="text-sm font-semibold text-text-primary/70">
                 {store.teams.length > 0 ? 'Or create a new team:' : 'Create Team:'}
               </p>
               <div className="flex gap-2">
@@ -157,8 +157,8 @@ export default function JoinRoomPage({ params }: JoinRoomPageProps) {
                   placeholder="Team name"
                   autoFocus={store.teams.length === 0}
                   className={cn(
-                    'flex-1 px-3 py-2 rounded-lg border-2 border-border-default bg-bg-primary text-text-primary',
-                    'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-green'
+                    'flex-1 px-4 py-2.5 rounded-xl border-2 border-border-default bg-bg-primary text-text-primary',
+                    'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-green transition-colors'
                   )}
                 />
                 <Button
@@ -197,7 +197,7 @@ export default function JoinRoomPage({ params }: JoinRoomPageProps) {
 
   if (!store.quizSpec || !playerTeam) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="h-full flex items-center justify-center">
         <p className="text-text-primary">Loading...</p>
       </div>
     );
@@ -205,21 +205,21 @@ export default function JoinRoomPage({ params }: JoinRoomPageProps) {
 
   return (
     <div
-      className="min-h-screen flex flex-col pb-32"
+      className="h-full flex flex-col pb-24"
       data-large-text={store.largeText || undefined}
       data-high-contrast={store.highContrast || undefined}
     >
       <div className="flex-1 flex flex-col overflow-auto p-4 safe-padding">
-        <div className="mb-4 flex items-center justify-between">
+        <div className="mb-4 flex items-center justify-between flex-shrink-0">
           <div>
             <h1 className="text-lg font-bold text-accent-green">{playerTeam.name}</h1>
-            <p className="text-xs text-text-primary opacity-75">
+            <p className="text-xs text-text-primary/70">
               Score: {store.scores[selectedTeamId] || 0}
             </p>
           </div>
           <button
             onClick={() => setShowScoreboard(!showScoreboard)}
-            className="text-sm font-semibold text-accent-green opacity-75 hover:opacity-100"
+            className="text-sm font-semibold text-accent-green opacity-70 hover:opacity-100 transition-opacity"
           >
             {showScoreboard ? 'Hide' : 'Show'}
           </button>
@@ -230,11 +230,11 @@ export default function JoinRoomPage({ params }: JoinRoomPageProps) {
         ) : (
           <>
             {store.phase === 'idle' && (
-              <div className="mb-4 p-4 bg-bg-card rounded-lg border-2 border-accent-green/50">
-                <p className="text-sm text-text-primary opacity-75 text-center">
+              <div className="mb-4 p-4 bg-bg-card rounded-xl border-2 border-accent-green/50 shadow-sm">
+                <p className="text-sm text-text-primary/70 text-center">
                   ? Waiting for the host to start the quiz...
                 </p>
-                <p className="text-xs text-text-primary opacity-50 text-center mt-2">
+                <p className="text-xs text-text-primary/50 text-center mt-2">
                   You can preview the questions below
                 </p>
               </div>
@@ -249,7 +249,7 @@ export default function JoinRoomPage({ params }: JoinRoomPageProps) {
             )}
 
             {currentQuestion && (
-              <div className="flex-1 flex flex-col bg-bg-card rounded-lg border-2 border-border-default p-6 min-h-0 mt-4">
+              <div className="flex-1 flex flex-col bg-bg-card rounded-2xl border-2 border-border-default shadow-sm p-6 min-h-0 mt-4 overflow-auto">
                 <QuizCard
                   question={currentQuestion}
                   isRevealed={store.phase === 'revealed'}
@@ -270,7 +270,7 @@ export default function JoinRoomPage({ params }: JoinRoomPageProps) {
       </div>
 
       {store.phase !== 'idle' && store.phase !== 'finished' && (
-        <div className="fixed bottom-0 left-0 right-0 bg-bg-card border-t-2 border-border-default safe-padding safe-bottom">
+        <div className="fixed bottom-0 left-0 right-0 bg-bg-card/95 backdrop-blur-xl border-t-2 border-accent-green shadow-lg safe-padding safe-bottom">
           <div className="max-w-4xl mx-auto">
             {store.phase === 'showing' && !locked && (
               <Button
@@ -287,8 +287,8 @@ export default function JoinRoomPage({ params }: JoinRoomPageProps) {
             )}
 
             {store.phase === 'revealed' && (
-              <div className="text-center space-y-2">
-                <p className="text-sm text-text-primary opacity-75">
+              <div className="text-center space-y-2 p-4">
+                <p className="text-sm text-text-primary/70">
                   Round complete. Waiting for next question...
                 </p>
                 {store.scores[selectedTeamId] ? (

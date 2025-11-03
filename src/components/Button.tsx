@@ -8,18 +8,18 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = 'primary', size = 'md', ...props }, ref) => {
-    const baseClasses = 'font-medium rounded-lg transition-all active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-green disabled:opacity-50 disabled:cursor-not-allowed';
+    const baseClasses = 'font-semibold rounded-xl transition-all duration-200 active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-green disabled:opacity-40 disabled:cursor-not-allowed';
     
     const variantClasses = {
-      primary: 'bg-accent-green text-white hover:bg-opacity-90 active:bg-opacity-80 shadow-md shadow-accent-green/20',
-      secondary: 'bg-bg-card text-accent-green border-2 border-accent-green hover:bg-accent-green hover:bg-opacity-10 hover:border-accent-red transition-colors',
-      outline: 'border-2 border-accent-green text-accent-green hover:bg-accent-green hover:text-white hover:border-accent-red transition-all',
+      primary: 'bg-accent-green text-white hover:bg-[#00a042] active:bg-[#008c3a] shadow-lg shadow-accent-green/25 hover:shadow-xl hover:shadow-accent-green/30',
+      secondary: 'bg-white text-accent-green border-2 border-accent-green hover:bg-accent-green/5 active:bg-accent-green/10 transition-colors shadow-sm',
+      outline: 'border-2 border-accent-green text-accent-green bg-transparent hover:bg-accent-green hover:text-white active:bg-accent-green/90 transition-all shadow-sm',
     };
     
     const sizeClasses = {
-      sm: 'px-3 py-2 text-sm min-h-10',
-      md: 'px-4 py-3 text-base min-h-12',
-      lg: 'px-6 py-4 text-lg min-h-14 w-full',
+      sm: 'px-4 py-2.5 text-sm min-h-[44px]',
+      md: 'px-5 py-3.5 text-base min-h-[48px]',
+      lg: 'px-6 py-4.5 text-lg min-h-[56px] w-full',
     };
     
     return (

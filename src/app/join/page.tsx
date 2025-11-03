@@ -23,18 +23,18 @@ export default function JoinPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 safe-padding">
-      <div className="w-full max-w-md space-y-6">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-accent-green mb-2">Join</h1>
-          <p className="text-sm text-text-primary opacity-75">
+    <div className="h-full flex flex-col items-center justify-center p-4 safe-padding overflow-auto">
+      <div className="w-full max-w-md space-y-5">
+        <div className="text-center mb-6">
+          <h1 className="text-4xl font-bold text-accent-green mb-2 tracking-tight">Join</h1>
+          <p className="text-sm text-text-primary/70">
             {step === 'code'
               ? 'Enter the room code from the host'
               : 'What is your name?'}
           </p>
         </div>
 
-        <div className="bg-bg-card rounded-lg border-2 border-border-default p-8 space-y-6">
+        <div className="bg-bg-card rounded-2xl border-2 border-border-default shadow-sm p-6 space-y-5">
           {step === 'code' ? (
             <>
               <div className="space-y-3">
@@ -54,9 +54,10 @@ export default function JoinPage() {
                   maxLength={4}
                   autoFocus
                   className={cn(
-                    'w-full px-4 py-4 text-2xl font-bold text-center tracking-widest rounded-lg',
+                    'w-full px-4 py-4 text-2xl font-bold text-center tracking-widest rounded-xl',
                     'border-2 border-border-default bg-bg-primary text-text-primary',
-                    'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-green'
+                    'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-green',
+                    'transition-colors'
                   )}
                 />
               </div>
@@ -109,9 +110,10 @@ function NameInput({ onSubmit }: { onSubmit: (name: string) => void }) {
           placeholder="Enter your name"
           autoFocus
           className={cn(
-            'w-full px-4 py-3 rounded-lg',
+            'w-full px-4 py-3 rounded-xl',
             'border-2 border-border-default bg-bg-primary text-text-primary',
-            'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-green'
+            'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-green',
+            'transition-colors'
           )}
         />
       </div>

@@ -17,14 +17,14 @@ export function RoomCode({ code, roomUrl }: RoomCodeProps) {
   };
 
   return (
-    <div className="flex flex-col items-center gap-6 p-6 bg-bg-card rounded-lg border-2 border-accent-green shadow-md shadow-accent-green/20">
+    <div className="flex flex-col items-center gap-6 p-6 bg-bg-card rounded-2xl border-2 border-accent-green shadow-lg shadow-accent-green/25">
       <div className="text-center">
-        <div className="mb-3 flex items-center justify-center gap-1.5">
-          <div className="w-2 h-2 rounded-full bg-accent-green"></div>
-          <div className="w-2 h-2 rounded-full bg-accent-white border border-accent-green"></div>
-          <div className="w-2 h-2 rounded-full bg-accent-red"></div>
+        <div className="mb-4 flex items-center justify-center gap-1.5">
+          <div className="w-2.5 h-2.5 rounded-full bg-accent-green shadow-sm"></div>
+          <div className="w-2.5 h-2.5 rounded-full bg-accent-white border border-accent-green shadow-sm"></div>
+          <div className="w-2.5 h-2.5 rounded-full bg-accent-red shadow-sm"></div>
         </div>
-        <h3 className="text-sm font-semibold text-text-primary opacity-75 mb-2">
+        <h3 className="text-sm font-semibold text-text-primary/70 mb-2">
           Room Code
         </h3>
         <div className="text-5xl font-bold text-accent-green tracking-wider">
@@ -33,7 +33,7 @@ export function RoomCode({ code, roomUrl }: RoomCodeProps) {
         <button
           onClick={handleCopyCode}
           className={cn(
-            'mt-3 text-xs font-medium text-accent-green opacity-75 hover:opacity-100 transition-opacity',
+            'mt-3 text-xs font-medium text-accent-green opacity-70 hover:opacity-100 transition-opacity',
             'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-green'
           )}
         >
@@ -43,16 +43,16 @@ export function RoomCode({ code, roomUrl }: RoomCodeProps) {
 
       {roomUrl && (
         <div className="flex flex-col items-center gap-2 w-full">
-          <h3 className="text-sm font-semibold text-text-primary opacity-75">
+          <h3 className="text-sm font-semibold text-text-primary/70">
             Share Link
           </h3>
-          <div className="w-full p-3 bg-bg-primary rounded-lg text-center text-xs text-text-primary break-all">
+          <div className="w-full p-3 bg-bg-primary rounded-xl text-center text-xs text-text-primary break-all border border-border-default">
             {roomUrl}
           </div>
           <button
             onClick={handleCopyLink}
             className={cn(
-              'text-xs font-medium text-accent-green opacity-75 hover:opacity-100 transition-opacity',
+              'text-xs font-medium text-accent-green opacity-70 hover:opacity-100 transition-opacity',
               'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-green'
             )}
           >
