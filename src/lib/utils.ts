@@ -84,3 +84,26 @@ export function generateTeamId(): string {
 export function generatePlayerId(): string {
   return `player_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 }
+
+/**
+ * Shuffles an array using Fisher-Yates algorithm and returns both the shuffled array
+ * and a mapping from shuffled index to original index.
+ * @param array The array to shuffle
+ * @returns An object with `shuffled` array and `originalIndexMap` (shuffledIndex -> originalIndex)
+ */
+export function shuffleWithMapping<T>(array: T[]): {
+  shuffled: T[];
+  originalIndexMap: number[];
+} {
+  const shuffled = [...array];
+  const originalIndexMap = array.map((_, i) => i);
+  
+  // Fisher-Yates shuffle
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    [originalIndexMap[i], originalIndexMap[j]] = [originalIndexMap[j], originalIndexMap[i]];
+  }
+  
+  return { shuffled, originalIndexMap };
+}

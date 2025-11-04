@@ -1,8 +1,8 @@
 'use client';
 
 import { Question } from '@/lib/types';
-import { useState, useRef } from 'react';
-import { cn } from '@/lib/utils';
+import { useState, useRef, useMemo } from 'react';
+import { cn, shuffleWithMapping } from '@/lib/utils';
 
 interface AudioCardProps {
   question: Question;
@@ -15,6 +15,18 @@ export function AudioCard({ question, isRevealed, onAnswer }: AudioCardProps) {
   
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+
+  // Shuffle options once per question
+  const { shuffled: shuffledOptions, originalIndexMap } = useMemo(
+    () => shuffleWithMapping(question.options!),
+    [question.id] // Re-shuffle only when question changes
+  );
+
+  // Find where the correct answer is in the shuffled array
+  const shuffledCorrectIndex = useMemo(() => {
+    if (question.correctAnswer === undefined) return undefined;
+    return originalIndexMap.findIndex(origIdx => origIdx === question.correctAnswer);
+  }, [question.correctAnswer, originalIndexMap]);
 
   const handlePlay = () => {
     if (audioRef.current) {
@@ -61,13 +73,15 @@ export function AudioCard({ question, isRevealed, onAnswer }: AudioCardProps) {
       </div>
 
       <div className="space-y-2 px-4 pb-4">
-        {question.options.map((option, idx) => {
-          const isCorrect = question.correctAnswer === idx;
+        {shuffledOptions.map((option, shuffledIdx) => {
+          const isCorrect = shuffledCorrectIndex === shuffledIdx;
+          // Map shuffled index back to original index for onAnswer callback
+          const originalIdx = originalIndexMap[shuffledIdx];
 
           return (
             <button
-              key={idx}
-              onClick={() => !isRevealed && onAnswer?.(idx)}
+              key={shuffledIdx}
+              onClick={() => !isRevealed && onAnswer?.(originalIdx)}
               disabled={isRevealed}
               className={cn(
                 'w-full p-3 rounded-lg font-semibold transition-all text-left',
@@ -75,7 +89,7 @@ export function AudioCard({ question, isRevealed, onAnswer }: AudioCardProps) {
                 'min-h-12 flex items-center',
                 isRevealed && isCorrect
                   ? 'bg-accent-green text-white border-accent-green'
-                  : isRevealed && question.correctAnswer !== undefined && question.correctAnswer !== idx
+                  : isRevealed && shuffledCorrectIndex !== undefined && shuffledCorrectIndex !== shuffledIdx
                   ? 'bg-accent-red text-white border-accent-red opacity-50'
                   : 'bg-bg-card border-border-default text-text-primary hover:border-accent-green'
               )}
