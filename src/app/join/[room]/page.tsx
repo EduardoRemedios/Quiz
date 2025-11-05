@@ -251,6 +251,7 @@ export default function JoinRoomPage({ params }: JoinRoomPageProps) {
             {currentQuestion && (
               <div className="flex-1 flex flex-col bg-bg-card rounded-2xl border-2 border-border-default shadow-sm p-6 min-h-0 mt-4 overflow-auto">
                 <QuizCard
+                  key={`${store.roundIdx}-${store.questionIdx}-${currentQuestion.id || currentQuestion.question}`}
                   question={currentQuestion}
                   isRevealed={store.phase === 'revealed'}
                   onAnswer={handleLockAnswer}

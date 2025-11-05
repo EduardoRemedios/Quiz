@@ -19,7 +19,7 @@ export function AudioCard({ question, isRevealed, onAnswer }: AudioCardProps) {
   // Shuffle options once per question
   const { shuffled: shuffledOptions, originalIndexMap } = useMemo(
     () => shuffleWithMapping(question.options!),
-    [question.id] // Re-shuffle only when question changes
+    [question.id, question.question, question.options?.join('|')] // Re-shuffle when question changes
   );
 
   // Find where the correct answer is in the shuffled array

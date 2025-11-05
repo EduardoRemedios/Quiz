@@ -16,7 +16,7 @@ export function SpeedCard({ question, isRevealed, onAnswer }: SpeedCardProps) {
   // Shuffle options once per question
   const { shuffled: shuffledOptions, originalIndexMap } = useMemo(
     () => shuffleWithMapping(question.options!),
-    [question.id] // Re-shuffle only when question changes
+    [question.id, question.question, question.options?.join('|')] // Re-shuffle when question changes
   );
 
   return (
